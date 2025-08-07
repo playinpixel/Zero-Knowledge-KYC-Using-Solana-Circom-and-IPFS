@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Page</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        .navbar-custom {
+            background-color: #f7c600;
+        }
+        .container {
+            max-width: 600px;
+            margin-top: 30px;
+        }
+        .form-group label {
+            font-weight: bold;
+        }
+        .btn-custom {
+            background-color: #f7c600;
+            color: white;
+            font-weight: bold;
+        }
+        #result {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <button class="btn btn-dark ml-3" onclick="window.location.href = '/landing'">Back</button>
+        <div class="container d-flex justify-content-center">
+            <a class="navbar-brand font-weight-bold" href="#" style="color: black;">Know Your Customer</a>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <h2>Verify Age</h2>
+        
+        <form id="bankForm">
+            <div class="form-group">
+                <label for="user_id">User ID:</label>
+                <input type="text" id="user_id" name="user_id" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-custom btn-block">Verify Age</button>
+        </form>
+
+        <div id="result" class="mt-4"></div>
+        <div id="kycDocumentSection" style="display:none; margin-top:20px;">
+          <h5>KYC Document (from Pinata/IPFS):</h5>
+          <pre id="kycDocumentJson" style="white-space:pre-wrap;"></pre>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("bankForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+            const userId = document.getElementById("user_id").value.trim();
+
+            const resultEl = document.getElementById("result");
+            const docSection = document.getElementById("kycDocumentSection");
+            const docJson = document.getElementById("kycDocumentJson");
+            docSection.style.display = "none";
+            docJson.textContent = "";
+
+            // Fetch client info from backend
+            fetch("/admin", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ user_id: userId, get_client_info: true })
+            })
+            .then(res => res.json())
+            .then(record => {
+              if (!record || record.error) {
+                resultEl.innerText = "❌ No client found with this User ID or error: " + (record.error || "Unknown error");
+                return;
+              }
+              // Age verification (assume age is in the KYC document, so fetch it next)
+              if (record.report_uri) {
+                docSection.style.display = "block";
+                docJson.textContent = "Loading...";
+                fetch(`/get_kyc_document/${record.report_uri}`)
+                  .then(res => res.json())
+                  .then(data => {
+                    if (data && !data.error) {
+                      docJson.textContent = JSON.stringify(data, null, 2);
+                      if (data.age !== undefined) {
+                        if (data.age >= 18) {
+                          resultEl.innerText = "✅ Age verified. User is 18 or older.";
+                        } else {
+                          resultEl.innerText = "❌ Age verification failed. User is under 18.";
+                        }
+                      } else {
+                        resultEl.innerText = "⚠️ Age field missing in KYC document.";
+                      }
+                    } else {
+                      docJson.textContent = "Error fetching document: " + (data.error || "Unknown error");
+                      resultEl.innerText = "❌ Error fetching KYC document.";
+                    }
+                  })
+                  .catch(err => {
+                    docJson.textContent = "Error fetching document: " + err;
+                    resultEl.innerText = "❌ Error fetching KYC document.";
+                  });
+              } else {
+                resultEl.innerText = "❌ No report_uri found for this user.";
+              }
+            })
+            .catch(err => {
+              resultEl.innerText = "❌ Error fetching client info: " + err;
+            });
+        });
+    </script>
+</body>
+</html>

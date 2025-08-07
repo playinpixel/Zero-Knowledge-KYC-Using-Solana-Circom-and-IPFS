@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to KYC Application</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .navbar-custom {
+            background-color: #f7c600;
+        }
+        .landing-content {
+            text-align: center;
+            margin-top: 100px;
+        }
+        .btn-custom {
+            background-color: #f7c600;
+            color: white;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <div class="container">
+            <a class="navbar-brand font-weight-bold" href="#" style="color: black;"> Know Your Customer</a>
+            <div class="ml-auto">
+                <button class="btn btn-dark" onclick="openPasswordModal('admin')">Admin</button>
+                <button class="btn btn-dark" onclick="openPasswordModal('bank')">Bank</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Landing Page Content -->
+    <div class="landing-content">
+        <h1>Welcome to the KYC Application</h1>
+        <a href="/" class="btn btn-custom btn-lg">Go to KYC Form</a>
+    </div>
+
+    <!-- Password Modal -->
+    <div class="modal fade" id="passwordModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Enter Password</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form id="passwordForm" method="POST" action="/admin_login">
+                        <input type="hidden" name="role" id="roleInput">
+                        <div class="form-group">
+                            <label for="passwordInput">Password:</label>
+                            <input type="password" name="password" id="passwordInput" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn btn-custom btn-block">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function openPasswordModal(role) {
+            $('#roleInput').val(role);
+            $('#passwordInput').val('');
+            $('#passwordModal').modal('show');
+        }
+    </script>
+
+</body>
+</html>

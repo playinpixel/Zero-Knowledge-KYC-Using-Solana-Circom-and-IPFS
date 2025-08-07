@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KYC Registration</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .navbar-custom {
+            background-color: #f7c600;
+        }
+        .container {
+            max-width: 600px;
+            margin-top: 30px;
+        }
+        .form-group label {
+            font-weight: bold;
+        }
+        .btn-custom {
+            background-color: #f7c600;
+            color: white;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <button class="btn btn-dark ml-3" onclick="window.location.href = '/landing'">Back</button>
+        <div class="container d-flex justify-content-center">
+            <a class="navbar-brand font-weight-bold" href="#" style="color: black;"> Know Your Customer</a>
+        </div>
+    </nav>
+
+    <!-- Form Container -->
+    <div class="container">
+        <h2 class="text-center mt-4 mb-4">Fill in your Data (KYC):</h2>
+
+        <!-- KYC Form -->
+        <form id="kycForm" class="border p-4 shadow-sm bg-white rounded" method="POST" action="/register">
+            <div class="form-group">
+                <label for="first_name">First Name:</label>
+                <input type="text" class="form-control" name="first_name" required>
+            </div>
+            <div class="form-group">
+                <label for="last_name">Last Name:</label>
+                <input type="text" class="form-control" name="last_name" required>
+            </div>
+            <div class="form-group">
+                <label for="dob">Date of Birth (dd/mm/yyyy):</label>
+                <input type="text" class="form-control" name="dob" placeholder="dd/mm/yyyy" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="nationality">Nationality:</label>
+                <input type="text" class="form-control" name="nationality" required>
+            </div>
+            <div class="form-group">
+                <label for="occupation">Occupation:</label>
+                <input type="text" class="form-control" name="occupation" required>
+            </div>
+            <div class="form-group">
+                <label for="user_id">User ID:</label>
+                <input type="text" class="form-control" name="user_id" required>
+            </div>
+
+            <button type="submit" class="btn btn-custom btn-block">Upload to IPFS</button>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

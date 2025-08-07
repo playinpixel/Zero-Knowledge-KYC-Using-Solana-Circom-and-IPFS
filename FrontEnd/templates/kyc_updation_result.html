@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KYC Updation</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .navbar-custom {
+            background-color: #f7c600;
+        }
+
+        .container {
+            max-width: 800px; /* Increased width for a larger card */
+            margin-top: 50px;
+        }
+
+        .card {
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .btn-custom {
+            background-color: #f7c600;
+            color: white;
+            font-weight: bold;
+        }
+
+        .card-title {
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .card-content {
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .card-content strong {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .receipt {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <div class="container">
+            <a class="navbar-brand font-weight-bold" href="#" style="color: black;">IT465 Project - Know Your Customer</a>
+            <div class="ml-auto">
+                <button class="btn btn-dark" onclick="window.location.href = '/'">Back</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container d-flex justify-content-center align-items-center">
+        <div class="card shadow-lg mt-5">
+            <h2 class="card-title text-center mb-4">KYC Updation Successful</h2>
+            <div class="card-text">
+                <div class="card-content">
+                    <strong>User ID:</strong>
+                    <p>{{ user_id }}</p>
+                </div>
+                <div class="card-content">
+                    <strong>ZKP Proof:</strong>
+                    <p>{{ zkp_proof }}</p>
+                </div>
+                <div class="card-content">
+                    <strong>Report IPFS URI:</strong>
+                    <p>{{ report_uri }}</p>
+                </div>
+                <div class="card-content">
+                    <strong>Transaction Receipt:</strong>
+                    <pre class="receipt">{{ receipt }}</pre>
+                </div>
+            </div>
+            <div class="text-center mt-4">
+                <a href="/" class="btn btn-custom">Go Back</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.4.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
