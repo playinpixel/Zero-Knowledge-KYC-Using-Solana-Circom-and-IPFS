@@ -36,6 +36,7 @@ Ensure you have the following installed:
    KYC_ADDRESS='address_of_the_deployed_smart_contract_in_ganache'
    JWT='your_pinata_jwt_token'
 
+Or use IPFS Desktop application, which is what was used here.
 
 
 ### Step 2: Start your local Ganache Application
